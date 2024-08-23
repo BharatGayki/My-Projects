@@ -1,0 +1,18 @@
+MongoDB cmd script
+
+cmd =>
+
+
+mongosh =>
+
+
+show dbs =>
+
+
+use db_name =>
+
+
+db.getUser("user_name") =>
+
+
+db.createUser({user :"mongoadmin",pwd :"bdung",roles :[{role :"readWrite",db : "hotelapp"}]}
