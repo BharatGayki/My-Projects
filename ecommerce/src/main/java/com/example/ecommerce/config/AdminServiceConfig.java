@@ -30,7 +30,7 @@ public class AdminServiceConfig implements UserDetailsService {
                 admin.getRoles()
                         .stream()
                         .map(role -> new SimpleGrantedAuthority(role.getName()))
-                        .collect(Collectors.toList()) 
+                        .collect(Collectors.toList())
         );
     }
 }

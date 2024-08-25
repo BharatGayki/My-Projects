@@ -12,4 +12,8 @@ public class LoginController {
         return "loginForm";
     }
 
+    @GetMapping("/")
+    public String indexPage(){
+        return "index";
+    }
 }
