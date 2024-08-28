@@ -6,12 +6,15 @@ import com.example.ecommerce.repo.AdminRepository;
 import com.example.ecommerce.repo.RoleRepository;
 import com.example.ecommerce.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 
 @Service
 public class AdminServiceImpl implements AdminService {
+
+
 
     @Autowired
     private AdminRepository adminRepository;

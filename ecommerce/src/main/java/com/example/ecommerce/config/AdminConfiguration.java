@@ -43,12 +43,15 @@ public class AdminConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authz -> authz
+                        .requestMatchers("/admin/register-new", "/admin/register").permitAll() // Allow access to these URLs without authentication
                         .requestMatchers("/admin/**").hasAuthority("ADMIN")
+                        .requestMatchers("/register-new").permitAll()
                         .anyRequest().permitAll()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/do-login")
+                        .loginProcessingUrl("/register-new")
                         .defaultSuccessUrl("/admin/index")
                         .permitAll()
                 )
