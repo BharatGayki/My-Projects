@@ -1,10 +1,9 @@
 package com.example.ecommerce.config;
 
-import com.example.ecommerce.service.AdminService;
+import com.example.ecommerce.service.impl.AdminServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,10 +15,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 public class AdminConfiguration {
 
-
     @Bean
     public UserDetailsService userDetailsService() {
-        return new AdminServiceConfig();
+        return new AdminServiceImpl(); // Use AdminServiceImpl which implements UserDetailsService
     }
 
     @Bean
@@ -35,24 +33,19 @@ public class AdminConfiguration {
         return provider;
     }
 
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(daoAuthenticationProvider());
-    }
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/admin/register-new", "/admin/register").permitAll() // Allow access to these URLs without authentication
+                        .requestMatchers("/admin/register-new", "/admin/register", "/register-new", "/register").permitAll()
                         .requestMatchers("/admin/**").hasAuthority("ADMIN")
-                        .requestMatchers("/register-new").permitAll()
-                        .anyRequest().permitAll()
+                        .requestMatchers("/").permitAll()
+                        .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/do-login")
-                        .loginProcessingUrl("/register-new")
-                        .defaultSuccessUrl("/admin/index")
+                        .defaultSuccessUrl("/admin/index", true) // Redirect to index page upon successful login
                         .permitAll()
                 )
                 .logout(logout -> logout
@@ -61,7 +54,8 @@ public class AdminConfiguration {
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                         .logoutSuccessUrl("/login?logout")
                         .permitAll()
-                );
+                )
+                .authenticationProvider(daoAuthenticationProvider()); // Set the provider in the SecurityFilterChain
 
         return http.build();
     }

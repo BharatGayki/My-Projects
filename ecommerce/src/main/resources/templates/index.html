@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>IndexPage</title>
@@ -7,5 +7,20 @@
 </head>
 <body>
 <h1>This is Index Page</h1>
+
+<a th:href="@{/login}">
+    <button>Login</button>
+</a>
+<a th:href="@{/register}">
+    <button>Register</button>
+</a>
+<a th:href="@{/categories}">
+    <button>Category</button>
+</a>
+<a th:href="@{/products}">
+    <button>Product</button>
+</a>
+
+
 </body>
 </html>

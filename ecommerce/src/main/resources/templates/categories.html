@@ -1,10 +1,139 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Categories Page</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+
+    <style>
+        /* Custom CSS for layout */
+        .sidebar {
+            height: 100vh;
+            background-color: #4e73df;
+            color: white;
+            padding: 20px;
+            position: fixed;
+            width: 200px;
+        }
+        .sidebar h4 {
+            margin-bottom: 30px;
+        }
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            margin: 10px 0;
+        }
+        .sidebar a:hover {
+            text-decoration: underline;
+        }
+        .main-content {
+            margin-left: 220px; /* Adjust according to sidebar width */
+            padding: 20px;
+        }
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .alert {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .table-container {
+            margin-top: 20px;
+        }
+        .search-bar {
+            width: 300px;
+        }
+    </style>
 </head>
 <body>
-$END$
+<div class="sidebar">
+    <h4>SB ADMIN<sup>2</sup></h4>
+    <a href="#">Dashboard</a>
+    <a href="#">Components</a>
+    <a href="#">Utilities</a>
+    <a href="#">Pages</a>
+    <a href="#">Charts</a>
+    <a href="#">Tables</a>
+</div>
+
+<div class="main-content">
+    <!-- Top bar with search and login button -->
+    <div class="top-bar">
+        <!-- Search Bar -->
+        <input type="text" class="form-control search-bar" placeholder="Search for...">
+
+        <!-- Login Button -->
+        <button type="button" class="btn btn-outline-primary">Login</button>
+    </div>
+
+    <!-- Top button section -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Categories</h2>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Add New Category</button>
+    </div>
+
+    <!-- Success and Failure Messages -->
+    <div th:if="${success}" class="alert alert-success text-center">
+        <p th:text="${success}"></p>
+    </div>
+    <div th:if="${failed}" class="alert alert-danger text-center">
+        <p th:text="${failed}"></p>
+    </div>
+
+    <!-- Table Section -->
+    <div class="table-container">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">Category Index</th>
+                <th scope="col">Category Name</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="category : ${categories}">
+                <th scope="row" th:text="${category.id}"></th>
+                <td th:text="${category.name}"></td>
+                <td> <!-- Action buttons go here if needed --> </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal -->
+    <form th:action="@{/add-category}" method="post" th:object="${categoryNew}">
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">New Category</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" th:field="*{name}" id="recipient-name">
+                            <div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save Category</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!-- Modal ends -->
+</div>
 </body>
 </html>
