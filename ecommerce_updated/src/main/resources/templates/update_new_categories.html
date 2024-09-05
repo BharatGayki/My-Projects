@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update New Categories</title>
+    <link rel="stylesheet" th:href="@{/css/add_update_page.css}">
+</head>
+<body>
+<h1>Update Categories</h1>
+
+<div class="container">
+    <div class="sidebar">
+        <h4>SB ADMIN<sup>2</sup></h4>
+        <a href="#">Dashboard</a>
+        <a href="#">Components</a>
+        <a href="#">Utilities</a>
+        <a href="#">Pages</a>
+        <a href="#">Charts</a>
+        <a href="#">Tables</a>
+    </div>
+
+    <div class="content">
+        <form th:action="@{/updateCategory}" th:object="${category_update}" method="post">
+            <div>
+                <input type="text" th:field="*{category_id}" readonly>
+            </div>
+            <div>
+                <input type="text" th:field="*{name}" placeholder="Enter Category Name">
+                <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></div>
+                <div th:if="${error}" class="text-danger">
+                    <p th:text="${error}"></p>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-info col-2">Update</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

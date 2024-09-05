@@ -1,0 +1,122 @@
+/* General Reset and Base Styles */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #f5f5f7;
+    color: #1c1c1e;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 2rem; /* Responsive font size */
+    color: #1c1c1e;
+    text-align: center; /* Centers the heading */
+    margin-bottom: 1.25rem; /* Space below the heading */
+}
+
+/* Container for Sidebar and Content */
+.container {
+    display: flex;
+    align-items: flex-start; /* Aligns sidebar and form to the top */
+    gap: 20px; /* Adds space between sidebar and content */
+}
+
+/* Sidebar */
+.sidebar {
+    height: 100vh;
+    background-color: #4e73df;
+    color: white;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200px;
+    overflow-y: auto; /* Prevent content overflow */
+}
+
+.sidebar h4 {
+    margin-bottom: 30px;
+}
+
+.sidebar a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    margin: 10px 0;
+    padding: 10px 0; /* Added padding for better touch interaction */
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+.sidebar a:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Subtle hover effect */
+    text-decoration: none;
+}
+
+/* Content area next to the sidebar */
+.content {
+    margin-left: 220px; /* Leave space for the fixed sidebar */
+    width: calc(100% - 240px); /* Responsive form width */
+    padding: 20px;
+    max-width: 1000px;
+}
+
+/* Form Styles */
+form {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+}
+
+/* Form Input */
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #d1d1d6;
+    font-size: 1em;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="text"]:focus {
+    outline: none;
+    border-color: #007aff;
+    box-shadow: 0 0 8px rgba(0, 122, 255, 0.4);
+}
+
+/* Submit Button */
+button[type="submit"] {
+    background-color: #007aff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 20px;
+    border-radius: 8px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056d2;
+    transform: scale(1.05);
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+    }
+
+    .content {
+        margin-left: 0;
+        width: 100%;
+    }
+}
